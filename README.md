@@ -1,11 +1,11 @@
 
 # RxPagination
 
-![](https://jitpack.io/v/mazenrashed/DotsIndicatorWithoutViewpager.svg)
+[![](https://jitpack.io/v/mazenrashed/RxPagination.svg)](https://jitpack.io/#mazenrashed/RxPagination)
 
-Implement pagination in a few lines
+Implement the pagination in a few lines, 
 
-![](https://media.giphy.com/media/dUs6RgepqKTR0UrEkl/giphy.gif)
+![](https://media.giphy.com/media/RN2oZPyBkUKQbi1WD1/giphy.gif)
 ###  Add the JitPack repository to your build file
 ```groovy
 allprojects {
@@ -18,10 +18,11 @@ allprojects {
 ### Add dependency
 ```groovy
 dependencies {
-    implementation 'com.github.mazenrashed:DotsIndicatorWithoutViewpager:${LAST_VERSION}'
+    implementation 'com.github.mazenrashed:RxPagination:${LAST_VERSION}'
 }
 ```
 # Usage
+We will use the car example,
 ## In Your repository
 Jest implement ListRepository\<T\>
 ```kotlin
@@ -64,30 +65,33 @@ class CarsViewModel(carsRepository: CarRepository) :
     }
     
     override fun onFetchDataListSubscribed() {  
-	    
+	   //Start fetching data
     }  
   
     override fun onFetchDataListError(throwable: Throwable) {  
-    
+	   
     }  
   
-    override fun onFetchDataListSuccess(dataList: ArrayList<GithubRepository>) {  
-    
+    override fun onFetchDataListSuccess(lastLoadedList: ArrayList<GithubRepository>) {  
+	  //You don't need to handle the data, but if you need it, it's available
+	  //This lastLoadedList is the new loaded part.
     }
  }
 ```
 ## In the UI (Activity or Fragment)
+To observe the data list, use viewModel.dataList, 
+dataList is a BehaviorRelay\<ArrayList\<T\>\>
 ```kotlin
 viewModel  
   .dataList  
   .observeOn(AndroidSchedulers.mainThread())  
   .subscribe { dataList ->  
-	// Adpate your list adapter here 
+	// notify your list adapter here 
     }
 ```
 ## Load and reload data
 ```kotlin
-viewModel.loadDataList() //To load the data at the first time
+viewModel.loadDataList() //To load the more data
 
 viewModel.reloadDataList() //To reload the data
 ```
