@@ -4,7 +4,7 @@ import com.jakewharton.rxrelay2.BehaviorRelay
 import com.mazenrashed.rxpaginationlib.RxPagination.Companion.ALL_ITEMS_EFFECTED
 
 class PaginationListManagerImpl<T>(
-    private val dataChanges: BehaviorRelay<DataChanges<T>>,
+    private val dataList: BehaviorRelay<ArrayList<T>>,
     private var page: BehaviorRelay<Int>,
     private val pageSize : Int,
     private var isLastPage: BehaviorRelay<Boolean>
@@ -13,24 +13,20 @@ class PaginationListManagerImpl<T>(
 
     override fun addToList(newMembers: ArrayList<T>) {
         if (isLastPage.value == true) return
-        dataChanges.accept(
-            dataChanges.value.apply {
+        dataList.accept(
+            dataList.value.apply {
                 if (page.value == 0)
-                    this?.list?.clear()
+                    this?.clear()
                 if (newMembers.isEmpty()) {
                     isLastPage.accept(true)
                     return@apply
                 }
 
-                this?.list?.addAll(newMembers.apply {
+                this?.addAll(newMembers.apply {
                     if (this.size < pageSize)
                         isLastPage.accept(true)
                 })
-            } ?: DataChanges(
-                ArrayList(),
-                ALL_ITEMS_EFFECTED,
-                RxPagination.TransactionTypes.REPLACE_ALL
-            )
+            } ?: ArrayList()
         )
         page.accept(page.value?.plus(1) ?: 0)
     }

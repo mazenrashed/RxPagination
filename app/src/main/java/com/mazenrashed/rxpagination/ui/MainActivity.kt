@@ -1,13 +1,11 @@
 package com.mazenrashed.rxpagination.ui
 
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.google.gson.Gson
 import com.mazenrashed.rxpagination.R
 import com.mazenrashed.rxpagination.data.model.GithubRepository
-import com.mazenrashed.rxpaginationlib.RxPagination
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
@@ -35,41 +33,15 @@ class MainActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 refresh_layout.isRefreshing = it
+                progress_bar.visibility = if (it) View.VISIBLE else View.GONE
             }.addTo(bag)
-//        Observable.interval(7, TimeUnit.SECONDS)
-//            .subscribe({
-//                if (viewModel.isLastPage.value == false)
-//                    viewModel.loadDataList()
-//            }, {
-//                it.printStackTrace()
-//            })
-//           .addTo(bag)
 
         viewModel
             .dataList
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                it.effectedItem.let {
-                    Log.d(
-                        "Effected item",
-                        if (it == RxPagination.ALL_ITEMS_EFFECTED) "All Items" else it.toString()
-                    )
-                }
-
-                Log.d(
-                    "Transaction type",
-                    when (it.transactionType) {
-                        RxPagination.TransactionTypes.ADD -> "Add"
-                        RxPagination.TransactionTypes.DELETE -> "Delete"
-                        RxPagination.TransactionTypes.MODIFY -> "Modify"
-                        RxPagination.TransactionTypes.REPLACE_ALL -> "Replace All"
-                    }
-                )
-
-                Log.d("list", Gson().toJson(it.list.map { it.name }))
-
-                dataList.clear()
-                dataList.addAll(it.list)
+            .subscribe { dataList ->
+                this.dataList.clear()
+                this.dataList.addAll(dataList)
                 adapter.notifyDataSetChanged()
             }
             .addTo(bag)

@@ -16,14 +16,7 @@ abstract class RxPagination<T>(
 
     private val bag = CompositeDisposable()
 
-    val dataList = BehaviorRelay.createDefault(
-        DataChanges<T>(
-            ArrayList(),
-            ALL_ITEMS_EFFECTED,
-            TransactionTypes.REPLACE_ALL
-        )
-    )
-
+    val dataList = BehaviorRelay.createDefault(ArrayList<T>())
     var page = BehaviorRelay.createDefault(firstPage)
     var isLastPage = BehaviorRelay.createDefault(false)
 
@@ -49,7 +42,7 @@ abstract class RxPagination<T>(
 
     abstract fun onFetchDataListSubscribed()
 
-    abstract fun onFetchDataListSuccess(dataList: ArrayList<T>)
+    abstract fun onFetchDataListSuccess(lastLoadedList: ArrayList<T>)
 
     abstract fun onFetchDataListError(throwable: Throwable)
 

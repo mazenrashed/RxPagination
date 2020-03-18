@@ -14,5 +14,4 @@ class GithubRepositoryRepository : ListRepository<GithubRepository> {
         return endPoints.getRepositories(pageSize, page)
     }
 
-
 }

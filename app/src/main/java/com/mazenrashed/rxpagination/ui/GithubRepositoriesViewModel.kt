@@ -10,7 +10,6 @@ class GithubRepositoriesViewModel :
 
     val isLoading = BehaviorRelay.createDefault(false)
 
-
     init {
         loadDataList()
     }
@@ -21,9 +20,10 @@ class GithubRepositoriesViewModel :
 
     override fun onFetchDataListError(throwable: Throwable) {
         isLoading.accept(false)
+        throwable.printStackTrace()
     }
 
-    override fun onFetchDataListSuccess(dataList: ArrayList<GithubRepository>) {
+    override fun onFetchDataListSuccess(lastLoadedList: ArrayList<GithubRepository>) {
         isLoading.accept(false)
     }
 
