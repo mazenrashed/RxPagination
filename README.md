@@ -96,6 +96,17 @@ viewModel.loadDataList() //To load the more data
 viewModel.reloadDataList() //To reload the data
 ```
 
+## Access page informations
+To access cerrent page
+```kotlin
+viewModel.page.value //Int
+```
+To check if you reach the last page
+```kotlin
+viewModel.isLastPage.value //Boolean
+```
+
+
 ## Contributing
 
 We welcome contributions !
