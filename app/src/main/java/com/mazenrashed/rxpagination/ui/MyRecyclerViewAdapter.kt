@@ -8,6 +8,7 @@ import coil.api.load
 import coil.transform.CircleCropTransformation
 import com.mazenrashed.rxpagination.R
 import com.mazenrashed.rxpagination.data.model.GithubRepository
+import com.mazenrashed.rxpagination.databinding.RepoItemBinding
 import kotlinx.android.synthetic.main.repo_item.view.*
 
 class MyRecyclerViewAdapter(private val gitHubRepositories: ArrayList<GithubRepository>) :
@@ -16,9 +17,8 @@ class MyRecyclerViewAdapter(private val gitHubRepositories: ArrayList<GithubRepo
     var reachLastItemListener: (() -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.repo_item, parent, false)
-        )
+        val dataBinding = RepoItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return MyViewHolder(dataBinding)
     }
 
     override fun getItemCount(): Int = gitHubRepositories.size
@@ -31,18 +31,21 @@ class MyRecyclerViewAdapter(private val gitHubRepositories: ArrayList<GithubRepo
     }
 
 
-    class MyViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    class MyViewHolder(private val dataBinding : RepoItemBinding) : RecyclerView.ViewHolder(dataBinding.root) {
 
         fun bindView(repo: GithubRepository) {
-            view.forks.text = "${repo.forksCount}"
-            view.starts.text = "${repo.stargazersCount}"
-            view.watches.text = "${repo.watchersCount}"
-            view.repo_name.text = repo.fullName
-            view.repo_desc.text = repo.description
-            view.imageView.load(repo.owner.avatarUrl) {
-                crossfade(true)
-                transformations(CircleCropTransformation())
-            }
+            dataBinding.repo = repo
+            dataBinding.executePendingBindings()
+
+//            view.forks.text = "${repo.forksCount}"
+//            view.starts.text = "${repo.stargazersCount}"
+//            view.watches.text = "${repo.watchersCount}"
+//            view.repo_name.text = repo.fullName
+//            view.repo_desc.text = repo.description
+//            view.imageView.load(repo.owner.avatarUrl) {
+//                crossfade(true)
+//                transformations(CircleCropTransformation())
+//            }
         }
     }
 }

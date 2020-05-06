@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="repo"
+            type="com.mazenrashed.rxpagination.data.model.GithubRepository" />
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -25,6 +30,7 @@
         android:layout_marginEnd="16dp"
         android:textColor="@android:color/black"
         android:textStyle="bold"
+        android:text="@{repo.name}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView"
@@ -40,7 +46,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/repo_name"
-        tools:text="This is the repo. desc." />
+        tools:text="This is the repo. desc."
+        android:text="@{repo.description}"/>
 
     <TextView
         android:id="@+id/starts"
@@ -56,7 +63,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/repo_desc"
-        tools:text="8" />
+        tools:text="8"
+        android:text="@{Integer.toString(repo.stargazersCount)}"/>
 
     <TextView
         android:id="@+id/watches"
@@ -67,6 +75,7 @@
         app:layout_constraintStart_toEndOf="@+id/starts"
         app:layout_constraintTop_toTopOf="@+id/starts"
         tools:text="20"
+        android:text="@{Integer.toString(repo.watchersCount)}"
         android:drawableStart="@drawable/ic_watch_24dp"
         android:drawablePadding="4dp"
         android:gravity="center"
@@ -82,6 +91,7 @@
         app:layout_constraintStart_toEndOf="@+id/watches"
         app:layout_constraintTop_toTopOf="@+id/starts"
         tools:text="20"
+        android:text="@{Integer.toString(repo.forksCount)}"
         android:drawableStart="@drawable/source_fork"
         android:drawablePadding="4dp"
         android:gravity="center"
