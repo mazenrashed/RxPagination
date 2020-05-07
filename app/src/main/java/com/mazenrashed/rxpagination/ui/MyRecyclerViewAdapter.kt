@@ -36,16 +36,6 @@ class MyRecyclerViewAdapter(private val gitHubRepositories: ArrayList<GithubRepo
         fun bindView(repo: GithubRepository) {
             dataBinding.repo = repo
             dataBinding.executePendingBindings()
-
-//            view.forks.text = "${repo.forksCount}"
-//            view.starts.text = "${repo.stargazersCount}"
-//            view.watches.text = "${repo.watchersCount}"
-//            view.repo_name.text = repo.fullName
-//            view.repo_desc.text = repo.description
-//            view.imageView.load(repo.owner.avatarUrl) {
-//                crossfade(true)
-//                transformations(CircleCropTransformation())
-//            }
         }
     }
 }

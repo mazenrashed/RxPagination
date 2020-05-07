@@ -18,6 +18,7 @@
         android:layout_height="70dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        app:src="@{repo.owner.avatarUrl}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
